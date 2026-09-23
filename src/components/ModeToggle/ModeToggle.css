@@ -1,0 +1,78 @@
+.mode-toggle-widget {
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.mode-toggle-widget.alert-active {
+  border-color: rgba(239, 68, 68, 0.4);
+  background-color: #261b23;
+}
+
+.toggle-status-box {
+  background-color: #0f172a;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.alert-active .toggle-status-box {
+  background-color: rgba(15, 23, 42, 0.7);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #22c55e;
+}
+
+.status-dot.dot-active {
+  background-color: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+.status-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #f1f5f9;
+}
+
+.status-description {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.btn-toggle {
+  width: 100%;
+  background-color: #334155;
+  color: #f8fafc;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-toggle:hover {
+  background-color: #475569;
+}
+
+.btn-toggle.btn-toggle-on {
+  background-color: #ef4444;
+  border-color: #dc2626;
+  color: #ffffff;
+}
+
+.btn-toggle.btn-toggle-on:hover {
+  background-color: #dc2626;
+}
