@@ -4,7 +4,7 @@ export function MagnitudeCounter({ threshold, onIncrement, onDecrement, onReset 
   return (
     <div className="widget-box magnitude-counter">
       <div className="widget-header">
-        <h3 className="widget-title">Поріг тривоги (магнітуда)</h3>
+        <h3 className="widget-title">Мінімальна магнітуда</h3>
         <span className="widget-tag">useState</span>
       </div>
 

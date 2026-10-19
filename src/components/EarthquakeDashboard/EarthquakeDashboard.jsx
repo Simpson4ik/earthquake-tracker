@@ -42,7 +42,7 @@ export function EarthquakeDashboard() {
     <>
       <section className="kpi-grid">
         {kpiCards.map((kpi) => (
-          <KpiCard key={kpi.id} title={kpi.title} value={kpi.value} change={kpi.change} trend={kpi.trend} />
+          <KpiCard key={kpi.id} {...kpi} />
         ))}
       </section>
 

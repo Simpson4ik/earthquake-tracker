@@ -1,4 +1,4 @@
-import { SORT_FIELDS } from '../../utils/sortEarthquakes';
+import { COLUMNS } from '../../constants/columns';
 import { formatTime } from '../../utils/formatTime';
 import { getCategory } from '../../constants/categories';
 import './EarthquakeTable.css';
@@ -18,7 +18,14 @@ export function EarthquakeTable({ earthquakes, sortKey, sortDirection, onSort })
     <table className="earthquake-table">
       <thead>
         <tr>
-          {Object.entries(SORT_FIELDS).map(([key, { label }]) => {
+          {COLUMNS.map(({ key, label, compare }) => {
+            if (!compare) {
+              return (
+                <th key={key} scope="col" className="th-static">
+                  {label}
+                </th>
+              );
+            }
             const isActive = key === sortKey;
             return (
               <th key={key} scope="col" aria-sort={ariaSort(isActive, sortDirection)}>
@@ -29,7 +36,6 @@ export function EarthquakeTable({ earthquakes, sortKey, sortDirection, onSort })
               </th>
             );
           })}
-          <th scope="col">Категорія</th>
         </tr>
       </thead>
       <tbody>
