@@ -1,42 +1,47 @@
-import { useCounter } from '../../hooks/useCounter';
 import './MagnitudeCounter.css';
 
-export function MagnitudeCounter({ initialThreshold = 4.5 }) {
-  const { count, increment, decrement, reset } = useCounter(initialThreshold, 0.5, 1.0, 9.0);
-
+export function MagnitudeCounter({
+  threshold,
+  step,
+  canDecrement,
+  canIncrement,
+  onIncrement,
+  onDecrement,
+  onReset,
+}) {
   return (
     <div className="widget-box magnitude-counter">
       <div className="widget-header">
-        <h3 className="widget-title">Поріг тривоги (магнітуда)</h3>
+        <h3 className="widget-title">Мінімальна магнітуда</h3>
         <span className="widget-tag">useState</span>
       </div>
 
-      <div className="counter-display">
+      <div className="counter-display" aria-live="polite">
         <span className="counter-prefix">M ≥</span>
-        <span className="counter-number">{count.toFixed(1)}</span>
+        <span className="counter-number">{threshold.toFixed(1)}</span>
       </div>
 
       <div className="counter-controls">
         <button
           type="button"
           className="btn-counter"
-          onClick={decrement}
+          onClick={onDecrement}
+          disabled={!canDecrement}
+          aria-label={`Зменшити поріг на ${step}`}
         >
-          − 0.5
+          − {step}
         </button>
-        <button
-          type="button"
-          className="btn-counter btn-reset"
-          onClick={reset}
-        >
+        <button type="button" className="btn-counter btn-reset" onClick={onReset}>
           Скинути
         </button>
         <button
           type="button"
           className="btn-counter"
-          onClick={increment}
+          onClick={onIncrement}
+          disabled={!canIncrement}
+          aria-label={`Збільшити поріг на ${step}`}
         >
-          + 0.5
+          + {step}
         </button>
       </div>
     </div>
