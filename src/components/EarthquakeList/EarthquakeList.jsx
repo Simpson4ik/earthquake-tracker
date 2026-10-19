@@ -1,46 +1,49 @@
-import { useEarthquakeFilter } from '../../hooks/useEarthquakeFilter';
+import { EarthquakeTable } from '../EarthquakeTable/EarthquakeTable';
+import { ALL_CATEGORIES, CATEGORIES } from '../../constants/categories';
 import './EarthquakeList.css';
 
-export function EarthquakeList({ earthquakes }) {
-  const { selectedCategory, setSelectedCategory, filteredItems } = useEarthquakeFilter(earthquakes);
+function ListBody({ loading, error, earthquakes, ...tableProps }) {
+  if (loading) {
+    return <div className="status-message">Завантаження даних USGS…</div>;
+  }
+  if (error) {
+    return (
+      <div className="status-message status-error" role="alert">
+        Не вдалося завантажити дані: {error.message}
+      </div>
+    );
+  }
+  if (earthquakes.length === 0) {
+    return <div className="status-message empty-message">Подій за вибраними умовами не знайдено</div>;
+  }
+  return <EarthquakeTable earthquakes={earthquakes} {...tableProps} />;
+}
 
+export function EarthquakeList({ category, onCategoryChange, ...bodyProps }) {
   return (
     <div className="widget-box earthquake-list-widget">
       <div className="list-controls-bar">
         <div>
           <h3 className="widget-title">Останні сейсмічні події</h3>
-          <span className="list-count-badge">Знайдено: {filteredItems.length}</span>
+          <span className="list-count-badge">Знайдено: {bodyProps.earthquakes.length}</span>
         </div>
         <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          aria-label="Фільтр за категорією"
+          value={category}
+          onChange={(e) => onCategoryChange(e.target.value)}
           className="category-select"
         >
-          <option value="all">Усі події</option>
-          <option value="minor">Слабкі (M &lt; 4.0)</option>
-          <option value="moderate">Помірні (M 4.0 - 5.9)</option>
-          <option value="strong">Сильні (M ≥ 6.0)</option>
+          <option value={ALL_CATEGORIES}>Усі події</option>
+          {CATEGORIES.map(({ id, label, range }) => (
+            <option key={id} value={id}>
+              {label} ({range})
+            </option>
+          ))}
         </select>
       </div>
 
       <div className="earthquake-items-container">
-        {filteredItems.length === 0 ? (
-          <div className="empty-message">Подій у вибраній категорії не знайдено</div>
-        ) : (
-          filteredItems.map((event) => (
-            <div key={event.id} className={`earthquake-row mag-${event.category}`}>
-              <div className="mag-badge">
-                M {event.magnitude.toFixed(1)}
-              </div>
-              <div className="earthquake-info">
-                <div className="earthquake-place">{event.place}</div>
-                <div className="earthquake-meta">
-                  Глибина: {event.depth} км • {event.time}
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+        <ListBody {...bodyProps} />
       </div>
     </div>
   );

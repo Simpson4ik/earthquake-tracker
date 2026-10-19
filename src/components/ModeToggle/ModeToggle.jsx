@@ -1,9 +1,7 @@
-import { useToggle } from '../../hooks/useToggle';
+import { ALERT_MAGNITUDE } from '../../constants/categories';
 import './ModeToggle.css';
 
-export function ModeToggle() {
-  const [isAlertMode, toggleAlertMode] = useToggle(false);
-
+export function ModeToggle({ isAlertMode, onToggle }) {
   return (
     <div className={`widget-box mode-toggle-widget ${isAlertMode ? 'alert-active' : ''}`}>
       <div className="widget-header">
@@ -20,7 +18,7 @@ export function ModeToggle() {
         </div>
         <p className="status-description">
           {isAlertMode
-            ? 'Фокус на руйнівних подіях (M > 6.0) з увімкненим звуковим оповіщенням.'
+            ? `У списку лише сильні події (M ≥ ${ALERT_MAGNITUDE.toFixed(1)}).`
             : 'Поточний збір загальної телеметрії з усіх підключених сейсмостанцій.'}
         </p>
       </div>
@@ -28,7 +26,7 @@ export function ModeToggle() {
       <button
         type="button"
         className={`btn-toggle ${isAlertMode ? 'btn-toggle-on' : ''}`}
-        onClick={toggleAlertMode}
+        onClick={onToggle}
       >
         {isAlertMode ? 'Вимкнути режим тривоги' : 'Увімкнути режим тривоги'}
       </button>
