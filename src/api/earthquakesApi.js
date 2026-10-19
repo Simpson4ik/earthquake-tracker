@@ -11,11 +11,32 @@ function mapFeature({ id, properties, geometry }) {
   };
 }
 
-export async function fetchEarthquakes(signal) {
-  const response = await fetch(FEED.url, { signal });
-  if (!response.ok) {
-    throw new Error(`USGS API: ${response.status} ${response.statusText}`);
+// Текст помилки бачить користувач, тому технічну причину лишаємо в cause
+async function request(url, signal) {
+  try {
+    return await fetch(url, { signal });
+  } catch (err) {
+    if (err.name === 'AbortError') throw err;
+    throw new Error("Немає з'єднання з сервером USGS. Перевірте інтернет.", { cause: err });
   }
-  const { features } = await response.json();
+}
+
+async function readFeatures(response) {
+  try {
+    const { features } = await response.json();
+    if (!Array.isArray(features)) throw new TypeError('features is not an array');
+    return features;
+  } catch (err) {
+    if (err.name === 'AbortError') throw err;
+    throw new Error('Сервер USGS повернув некоректні дані.', { cause: err });
+  }
+}
+
+export async function fetchEarthquakes(signal) {
+  const response = await request(FEED.url, signal);
+  if (!response.ok) {
+    throw new Error(`Сервер USGS відповів помилкою (${response.status}).`);
+  }
+  const features = await readFeatures(response);
   return features.filter(({ properties }) => properties.mag !== null).map(mapFeature);
 }

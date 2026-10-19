@@ -26,9 +26,9 @@ function formatKpis(kpis) {
 export function buildKpiCards(kpis) {
   const values = formatKpis(kpis);
   return [
-    { id: 'kpi-total', title: FEED.title, value: values.total, change: FEED.description, trend: 'up' },
+    { id: 'kpi-total', title: FEED.title, value: values.total, change: FEED.description, trend: 'neutral' },
     { id: 'kpi-max-mag', title: 'Пікова магнітуда', value: values.peak, change: values.peakPlace, trend: 'danger' },
-    { id: 'kpi-avg-depth', title: 'Середня глибина', value: values.avgDepth, change: 'Усереднено за вибіркою', trend: 'down' },
+    { id: 'kpi-avg-depth', title: 'Середня глибина', value: values.avgDepth, change: 'Усереднено за вибіркою', trend: 'neutral' },
     {
       id: 'kpi-strong',
       title: 'Сильні події',

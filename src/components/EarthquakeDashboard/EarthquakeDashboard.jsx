@@ -16,7 +16,7 @@ import { computeKpis } from '../../utils/computeKpis';
 import { buildKpiCards } from '../../utils/buildKpiCards';
 
 export function EarthquakeDashboard() {
-  const { data, loading, error } = useEarthquakes();
+  const { data, loading, error, retry } = useEarthquakes();
   const { count: threshold, increment, decrement, reset } = useCounter(
     THRESHOLD.initial,
     THRESHOLD.step,
@@ -44,6 +44,8 @@ export function EarthquakeDashboard() {
           <MagnitudeCounter
             threshold={threshold}
             step={THRESHOLD.step}
+            canDecrement={threshold > THRESHOLD.min}
+            canIncrement={threshold < THRESHOLD.max}
             onIncrement={increment}
             onDecrement={decrement}
             onReset={reset}
@@ -55,6 +57,7 @@ export function EarthquakeDashboard() {
           <EarthquakeList
             loading={loading}
             error={error}
+            onRetry={retry}
             earthquakes={visible}
             category={category}
             onCategoryChange={setCategory}

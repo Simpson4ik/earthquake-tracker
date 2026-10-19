@@ -1,13 +1,20 @@
 import { EarthquakeTable } from '../EarthquakeTable/EarthquakeTable';
 
-export function EarthquakeListBody({ loading, error, earthquakes, sort, onSort }) {
+export function EarthquakeListBody({ loading, error, onRetry, earthquakes, sort, onSort }) {
   if (loading) {
-    return <div className="status-message">Завантаження даних USGS…</div>;
+    return (
+      <div className="status-message" role="status">
+        Завантаження даних USGS…
+      </div>
+    );
   }
   if (error) {
     return (
       <div className="status-message status-error" role="alert">
-        Не вдалося завантажити дані: {error.message}
+        <p>Не вдалося завантажити дані. {error.message}</p>
+        <button type="button" className="btn-retry" onClick={onRetry}>
+          Спробувати ще раз
+        </button>
       </div>
     );
   }

@@ -71,8 +71,13 @@
   transition: background-color 0.2s;
 }
 
-.btn-counter:hover {
+.btn-counter:hover:not(:disabled) {
   background-color: #475569;
+}
+
+.btn-counter:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .btn-counter.btn-reset {

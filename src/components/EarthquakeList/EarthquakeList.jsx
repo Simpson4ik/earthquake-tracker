@@ -3,7 +3,16 @@ import { ALL_CATEGORIES, CATEGORIES } from '../../constants/categories';
 import { formatRange } from '../../utils/formatMagnitude';
 import './EarthquakeList.css';
 
-export function EarthquakeList({ loading, error, earthquakes, category, onCategoryChange, sort, onSort }) {
+export function EarthquakeList({
+  loading,
+  error,
+  onRetry,
+  earthquakes,
+  category,
+  onCategoryChange,
+  sort,
+  onSort,
+}) {
   const isReady = !loading && !error;
 
   return (
@@ -29,7 +38,14 @@ export function EarthquakeList({ loading, error, earthquakes, category, onCatego
       </div>
 
       <div className="earthquake-items-container">
-        <EarthquakeListBody loading={loading} error={error} earthquakes={earthquakes} sort={sort} onSort={onSort} />
+        <EarthquakeListBody
+          loading={loading}
+          error={error}
+          onRetry={onRetry}
+          earthquakes={earthquakes}
+          sort={sort}
+          onSort={onSort}
+        />
       </div>
     </div>
   );
