@@ -1,6 +1,6 @@
 import { EarthquakeTable } from '../EarthquakeTable/EarthquakeTable';
 
-export function EarthquakeListBody({ loading, error, earthquakes, ...tableProps }) {
+export function EarthquakeListBody({ loading, error, earthquakes, sort, onSort }) {
   if (loading) {
     return <div className="status-message">Завантаження даних USGS…</div>;
   }
@@ -12,7 +12,7 @@ export function EarthquakeListBody({ loading, error, earthquakes, ...tableProps 
     );
   }
   if (earthquakes.length === 0) {
-    return <div className="status-message empty-message">Подій за вибраними умовами не знайдено</div>;
+    return <div className="status-message">Подій за вибраними умовами не знайдено</div>;
   }
-  return <EarthquakeTable earthquakes={earthquakes} {...tableProps} />;
+  return <EarthquakeTable earthquakes={earthquakes} sort={sort} onSort={onSort} />;
 }

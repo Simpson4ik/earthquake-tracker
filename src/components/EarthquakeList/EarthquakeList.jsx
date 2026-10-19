@@ -1,9 +1,9 @@
 import { EarthquakeListBody } from './EarthquakeListBody';
 import { ALL_CATEGORIES, CATEGORIES } from '../../constants/categories';
+import { formatRange } from '../../utils/formatMagnitude';
 import './EarthquakeList.css';
 
-export function EarthquakeList({ category, onCategoryChange, ...bodyProps }) {
-  const { loading, error, earthquakes } = bodyProps;
+export function EarthquakeList({ loading, error, earthquakes, category, onCategoryChange, sort, onSort }) {
   const isReady = !loading && !error;
 
   return (
@@ -20,16 +20,16 @@ export function EarthquakeList({ category, onCategoryChange, ...bodyProps }) {
           className="category-select"
         >
           <option value={ALL_CATEGORIES}>Усі події</option>
-          {CATEGORIES.map(({ id, label, range }) => (
-            <option key={id} value={id}>
-              {label} ({range})
+          {CATEGORIES.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.label} ({formatRange(cat)})
             </option>
           ))}
         </select>
       </div>
 
       <div className="earthquake-items-container">
-        <EarthquakeListBody {...bodyProps} />
+        <EarthquakeListBody loading={loading} error={error} earthquakes={earthquakes} sort={sort} onSort={onSort} />
       </div>
     </div>
   );

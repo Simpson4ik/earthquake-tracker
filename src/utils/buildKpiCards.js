@@ -1,5 +1,6 @@
 import { FEED } from '../constants/feed';
 import { ALERT_MAGNITUDE } from '../constants/categories';
+import { formatMagnitude, formatMinMagnitude } from './formatMagnitude';
 
 const NO_VALUE = '—';
 
@@ -15,7 +16,7 @@ function formatKpis(kpis) {
   if (!kpis) return EMPTY_VALUES;
   return {
     total: String(kpis.total),
-    peak: `M ${kpis.peak.magnitude.toFixed(1)}`,
+    peak: formatMagnitude(kpis.peak.magnitude),
     peakPlace: kpis.peak.place,
     avgDepth: `${kpis.avgDepth.toFixed(1)} км`,
     strongCount: String(kpis.strongCount),
@@ -32,7 +33,7 @@ export function buildKpiCards(kpis) {
       id: 'kpi-strong',
       title: 'Сильні події',
       value: values.strongCount,
-      change: `M ≥ ${ALERT_MAGNITUDE.toFixed(1)}`,
+      change: formatMinMagnitude(ALERT_MAGNITUDE),
       trend: 'neutral',
     },
   ];

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { fetchEarthquakes } from '../api/earthquakesApi';
 
+const NO_DATA = [];
+
 export function useEarthquakes() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -13,13 +14,10 @@ export function useEarthquakes() {
       .then(setData)
       .catch((err) => {
         if (err.name !== 'AbortError') setError(err);
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) setLoading(false);
       });
 
     return () => controller.abort();
   }, []);
 
-  return { data, loading, error };
+  return { data: data ?? NO_DATA, loading: data === null && error === null, error };
 }

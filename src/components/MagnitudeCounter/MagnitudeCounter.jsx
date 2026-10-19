@@ -1,6 +1,6 @@
 import './MagnitudeCounter.css';
 
-export function MagnitudeCounter({ threshold, onIncrement, onDecrement, onReset }) {
+export function MagnitudeCounter({ threshold, step, onIncrement, onDecrement, onReset }) {
   return (
     <div className="widget-box magnitude-counter">
       <div className="widget-header">
@@ -15,13 +15,13 @@ export function MagnitudeCounter({ threshold, onIncrement, onDecrement, onReset 
 
       <div className="counter-controls">
         <button type="button" className="btn-counter" onClick={onDecrement}>
-          − 0.5
+          − {step}
         </button>
         <button type="button" className="btn-counter btn-reset" onClick={onReset}>
           Скинути
         </button>
         <button type="button" className="btn-counter" onClick={onIncrement}>
-          + 0.5
+          + {step}
         </button>
       </div>
     </div>

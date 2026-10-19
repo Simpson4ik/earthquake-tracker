@@ -1,4 +1,5 @@
 import { ALERT_MAGNITUDE } from '../../constants/categories';
+import { formatMinMagnitude } from '../../utils/formatMagnitude';
 import './ModeToggle.css';
 
 export function ModeToggle({ isAlertMode, onToggle }) {
@@ -18,7 +19,7 @@ export function ModeToggle({ isAlertMode, onToggle }) {
         </div>
         <p className="status-description">
           {isAlertMode
-            ? `У списку лише сильні події (M ≥ ${ALERT_MAGNITUDE.toFixed(1)}).`
+            ? `У списку лише сильні події (${formatMinMagnitude(ALERT_MAGNITUDE)}).`
             : 'Поточний збір загальної телеметрії з усіх підключених сейсмостанцій.'}
         </p>
       </div>
