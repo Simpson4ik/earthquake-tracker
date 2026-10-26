@@ -1,4 +1,3 @@
-import { FEED } from '../constants/feed';
 import { ALERT_MAGNITUDE } from '../constants/categories';
 import { formatMagnitude, formatMinMagnitude } from './formatMagnitude';
 
@@ -23,10 +22,10 @@ function formatKpis(kpis) {
   };
 }
 
-export function buildKpiCards(kpis) {
+export function buildKpiCards(kpis, selectionLabel) {
   const values = formatKpis(kpis);
   return [
-    { id: 'kpi-total', title: FEED.title, value: values.total, change: FEED.description, trend: 'neutral' },
+    { id: 'kpi-total', title: 'Подій у вибірці', value: values.total, change: selectionLabel, trend: 'neutral' },
     { id: 'kpi-max-mag', title: 'Пікова магнітуда', value: values.peak, change: values.peakPlace, trend: 'danger' },
     { id: 'kpi-avg-depth', title: 'Середня глибина', value: values.avgDepth, change: 'Усереднено за вибіркою', trend: 'neutral' },
     {

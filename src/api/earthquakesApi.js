@@ -1,4 +1,12 @@
-import { FEED, UNKNOWN_PLACE } from '../constants/feed';
+import { INVALID_DATA_MESSAGE } from './http';
+
+const UNKNOWN_PLACE = 'Невідоме місце';
+
+const FEED_BASE_URL = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary';
+
+export function buildEarthquakesUrl({ magnitude, period }) {
+  return `${FEED_BASE_URL}/${magnitude}_${period}.geojson`;
+}
 
 function mapFeature({ id, properties, geometry }) {
   return {
@@ -11,32 +19,12 @@ function mapFeature({ id, properties, geometry }) {
   };
 }
 
-// Текст помилки бачить користувач, тому технічну причину лишаємо в cause
-async function request(url, signal) {
-  try {
-    return await fetch(url, { signal });
-  } catch (err) {
-    if (err.name === 'AbortError') throw err;
-    throw new Error("Немає з'єднання з сервером USGS. Перевірте інтернет.", { cause: err });
+export function mapEarthquakes(geojson) {
+  if (!Array.isArray(geojson?.features)) {
+    throw new Error(INVALID_DATA_MESSAGE);
   }
-}
-
-async function readFeatures(response) {
-  try {
-    const { features } = await response.json();
-    if (!Array.isArray(features)) throw new TypeError('features is not an array');
-    return features;
-  } catch (err) {
-    if (err.name === 'AbortError') throw err;
-    throw new Error('Сервер USGS повернув некоректні дані.', { cause: err });
-  }
-}
-
-export async function fetchEarthquakes(signal) {
-  const response = await request(FEED.url, signal);
-  if (!response.ok) {
-    throw new Error(`Сервер USGS відповів помилкою (${response.status}).`);
-  }
-  const features = await readFeatures(response);
-  return features.filter(({ properties }) => properties.mag !== null).map(mapFeature);
+  // Пропускаємо записи без магнітуди чи координат замість падіння всього списку
+  return geojson.features
+    .filter(({ properties, geometry }) => properties?.mag != null && Array.isArray(geometry?.coordinates))
+    .map(mapFeature);
 }
