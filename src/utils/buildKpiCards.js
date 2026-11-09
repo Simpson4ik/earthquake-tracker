@@ -1,7 +1,6 @@
+import { NO_VALUE } from '../constants/app';
 import { ALERT_MAGNITUDE } from '../constants/categories';
 import { formatMagnitude, formatMinMagnitude } from './formatMagnitude';
-
-const NO_VALUE = '—';
 
 const EMPTY_VALUES = {
   total: NO_VALUE,

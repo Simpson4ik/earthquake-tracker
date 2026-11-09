@@ -1,0 +1,22 @@
+.mag-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mag-minor {
+  background-color: var(--color-mag-minor-bg);
+  color: var(--color-success);
+}
+
+.mag-moderate {
+  background-color: var(--color-mag-moderate-bg);
+  color: var(--color-warning);
+}
+
+.mag-strong {
+  background-color: var(--color-mag-strong-bg);
+  color: var(--color-danger);
+}

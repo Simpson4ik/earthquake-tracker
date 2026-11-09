@@ -1,0 +1,9 @@
+.details-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.details-page .back-link {
+  align-self: flex-start;
+}

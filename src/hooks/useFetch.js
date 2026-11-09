@@ -4,8 +4,6 @@ import { fetchJson } from '../api/http';
 const identity = (data) => data;
 
 export function useFetch(url, parse = identity) {
-  // Кожна зміна url або refetch отримує новий id, тож відповідь на старий запит
-  // ніколи не сплутається з поточним, навіть якщо url повернувся до попереднього
   const [request, setRequest] = useState({ url, id: 0 });
   const [result, setResult] = useState(null);
 
@@ -13,8 +11,6 @@ export function useFetch(url, parse = identity) {
     setRequest({ url, id: request.id + 1 });
   }
 
-  // Effect Event завжди бачить актуальний parse, але не перезапускає запит,
-  // тож можна передавати й inline-функцію
   const parseResponse = useEffectEvent((data) => parse(data));
 
   useEffect(() => {

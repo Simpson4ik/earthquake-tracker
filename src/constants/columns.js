@@ -1,6 +1,5 @@
 const collator = new Intl.Collator('uk');
 
-// Колонки таблиці; наявність compare робить колонку сортованою
 export const COLUMNS = [
   {
     key: 'place',

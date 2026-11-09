@@ -5,6 +5,15 @@ const formatter = new Intl.DateTimeFormat('uk-UA', {
   minute: '2-digit',
 });
 
+const fullFormatter = new Intl.DateTimeFormat('uk-UA', {
+  dateStyle: 'long',
+  timeStyle: 'long',
+});
+
 export function formatTime(timestamp) {
   return formatter.format(timestamp);
+}
+
+export function formatDateTime(timestamp) {
+  return fullFormatter.format(timestamp);
 }
