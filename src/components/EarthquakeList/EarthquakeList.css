@@ -4,38 +4,9 @@
 
 .list-count-badge {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .earthquake-items-container {
   overflow-x: auto;
-}
-
-.status-message {
-  padding: 2rem 1rem;
-  text-align: center;
-  color: #94a3b8;
-}
-
-.status-error {
-  color: #f87171;
-}
-
-.status-error p {
-  margin: 0 0 1rem;
-}
-
-.btn-retry {
-  background-color: #334155;
-  color: #f8fafc;
-  border: 1px solid #475569;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-retry:hover,
-.btn-retry:focus-visible {
-  background-color: #475569;
 }

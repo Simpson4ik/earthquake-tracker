@@ -1,13 +1,27 @@
+import { Link, useNavigate } from 'react-router';
+import { MagnitudeBadge } from '../MagnitudeBadge/MagnitudeBadge';
+import { useFilters } from '../../hooks/useFilters';
 import { COLUMNS } from '../../constants/columns';
 import { getCategory } from '../../constants/categories';
+import { getEarthquakePath } from '../../constants/routes';
 import { formatTime } from '../../utils/formatTime';
-import { formatMagnitude } from '../../utils/formatMagnitude';
 import './EarthquakeTable.css';
 
 const ARIA_SORT = { asc: 'ascending', desc: 'descending' };
 const SORT_ARROW = { asc: ' ▲', desc: ' ▼' };
 
-export function EarthquakeTable({ earthquakes, sort, onSort }) {
+export function EarthquakeTable({ earthquakes }) {
+  const { sort, toggleSort } = useFilters();
+  const navigate = useNavigate();
+
+  const handleRowClick = (event, id) => {
+    const isLinkClick = event.target.closest('a');
+    const isSelectingText = !window.getSelection().isCollapsed;
+    if (!isLinkClick && !isSelectingText) {
+      navigate(getEarthquakePath(id));
+    }
+  };
+
   return (
     <table className="earthquake-table">
       <thead>
@@ -23,7 +37,7 @@ export function EarthquakeTable({ earthquakes, sort, onSort }) {
             const isActive = key === sort.key;
             return (
               <th key={key} scope="col" aria-sort={isActive ? ARIA_SORT[sort.direction] : 'none'}>
-                <button type="button" className="sort-button" onClick={() => onSort(key)}>
+                <button type="button" className="sort-button" onClick={() => toggleSort(key)}>
                   {label}
                   <span aria-hidden="true">{isActive ? SORT_ARROW[sort.direction] : ''}</span>
                 </button>
@@ -33,20 +47,21 @@ export function EarthquakeTable({ earthquakes, sort, onSort }) {
         </tr>
       </thead>
       <tbody>
-        {earthquakes.map((eq) => {
-          const category = getCategory(eq.magnitude);
-          return (
-            <tr key={eq.id} className={`mag-${category.id}`}>
-              <td className="earthquake-place">{eq.place}</td>
-              <td>
-                <span className="mag-badge">{formatMagnitude(eq.magnitude)}</span>
-              </td>
-              <td>{eq.depth.toFixed(1)}</td>
-              <td>{formatTime(eq.time)}</td>
-              <td>{category.label}</td>
-            </tr>
-          );
-        })}
+        {earthquakes.map((eq) => (
+          <tr key={eq.id} onClick={(event) => handleRowClick(event, eq.id)}>
+            <td className="earthquake-place">
+              <Link to={getEarthquakePath(eq.id)} className="earthquake-link">
+                {eq.place}
+              </Link>
+            </td>
+            <td>
+              <MagnitudeBadge magnitude={eq.magnitude} />
+            </td>
+            <td>{eq.depth.toFixed(1)}</td>
+            <td>{formatTime(eq.time)}</td>
+            <td>{getCategory(eq.magnitude).label}</td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );

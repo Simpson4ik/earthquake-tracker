@@ -1,5 +1,6 @@
 import { TextField } from '../TextField/TextField';
 import { SelectField } from '../SelectField/SelectField';
+import { useFilters } from '../../hooks/useFilters';
 import {
   LIMIT_OPTIONS,
   MAGNITUDE_OPTIONS,
@@ -25,7 +26,9 @@ const SELECT_FIELDS = [
   { name: 'limit', label: 'Показувати', options: LIMIT_OPTIONS },
 ];
 
-export function FilterPanel({ values, onFieldChange, isPending, canReset, onReset }) {
+export function FilterPanel() {
+  const { values, setField, isPending, canReset, resetFilters } = useFilters();
+
   return (
     <form className="widget-box filter-panel" role="search" onSubmit={(e) => e.preventDefault()}>
       <div className="widget-header">
@@ -45,7 +48,7 @@ export function FilterPanel({ values, onFieldChange, isPending, canReset, onRese
           label="Пошук за місцем"
           placeholder="Напр. Alaska"
           value={values.search}
-          onChange={(value) => onFieldChange('search', value)}
+          onChange={(value) => setField('search', value)}
         />
         <TextField
           name="minMagnitude"
@@ -55,7 +58,7 @@ export function FilterPanel({ values, onFieldChange, isPending, canReset, onRese
           placeholder="Без порогу"
           {...MIN_MAGNITUDE_INPUT}
           value={values.minMagnitude}
-          onChange={(value) => onFieldChange('minMagnitude', value)}
+          onChange={(value) => setField('minMagnitude', value)}
         />
         {SELECT_FIELDS.map(({ name, label, options }) => (
           <SelectField
@@ -64,12 +67,12 @@ export function FilterPanel({ values, onFieldChange, isPending, canReset, onRese
             label={label}
             options={options}
             value={values[name]}
-            onChange={(value) => onFieldChange(name, value)}
+            onChange={(value) => setField(name, value)}
           />
         ))}
       </div>
 
-      <button type="button" className="btn-reset-filters" onClick={onReset} disabled={!canReset}>
+      <button type="button" className="btn-reset-filters" onClick={resetFilters} disabled={!canReset}>
         Скинути фільтри
       </button>
     </form>

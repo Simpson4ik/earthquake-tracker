@@ -1,6 +1,13 @@
 export const INVALID_DATA_MESSAGE = 'Сервер повернув некоректні дані.';
 
-// Текст помилки бачить користувач, тому технічну причину лишаємо в cause
+class HttpError extends Error {
+  constructor(status) {
+    super(`Сервер відповів помилкою (${status}).`);
+    this.name = 'HttpError';
+    this.status = status;
+  }
+}
+
 export async function fetchJson(url, signal) {
   let response;
   try {
@@ -11,7 +18,7 @@ export async function fetchJson(url, signal) {
   }
 
   if (!response.ok) {
-    throw new Error(`Сервер відповів помилкою (${response.status}).`);
+    throw new HttpError(response.status);
   }
 
   try {

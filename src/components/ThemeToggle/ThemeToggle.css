@@ -1,0 +1,16 @@
+.theme-toggle {
+  background-color: var(--color-control);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 6px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  background-color: var(--color-control-hover);
+}

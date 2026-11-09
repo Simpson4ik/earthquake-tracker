@@ -2,8 +2,6 @@ import { ALL_CATEGORIES } from './categories';
 
 export const DEBOUNCE_MS = 400;
 
-// Значення magnitude і period — частини назви фіду USGS: {magnitude}_{period}.geojson.
-// Рівні all і 1.0 не пропонуємо: за місяць це ~10 000 подій і кілька МБ даних
 export const MAGNITUDE_OPTIONS = [
   { value: '2.5', label: 'M 2.5+' },
   { value: '4.5', label: 'M 4.5+' },
