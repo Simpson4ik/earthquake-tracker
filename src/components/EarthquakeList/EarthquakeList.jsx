@@ -1,6 +1,4 @@
 import { EarthquakeListBody } from './EarthquakeListBody';
-import { ALL_CATEGORIES, CATEGORIES } from '../../constants/categories';
-import { formatRange } from '../../utils/formatMagnitude';
 import './EarthquakeList.css';
 
 export function EarthquakeList({
@@ -8,8 +6,7 @@ export function EarthquakeList({
   error,
   onRetry,
   earthquakes,
-  category,
-  onCategoryChange,
+  totalCount,
   sort,
   onSort,
 }) {
@@ -17,24 +14,13 @@ export function EarthquakeList({
 
   return (
     <div className="widget-box earthquake-list-widget">
-      <div className="list-controls-bar">
-        <div>
-          <h3 className="widget-title">Останні сейсмічні події</h3>
-          {isReady && <span className="list-count-badge">Знайдено: {earthquakes.length}</span>}
-        </div>
-        <select
-          aria-label="Фільтр за категорією"
-          value={category}
-          onChange={(e) => onCategoryChange(e.target.value)}
-          className="category-select"
-        >
-          <option value={ALL_CATEGORIES}>Усі події</option>
-          {CATEGORIES.map((cat) => (
-            <option key={cat.id} value={cat.id}>
-              {cat.label} ({formatRange(cat)})
-            </option>
-          ))}
-        </select>
+      <div className="list-header">
+        <h3 className="widget-title">Останні сейсмічні події</h3>
+        {/* Регіон існує завжди, щоб екранний диктор озвучував нову кількість після фільтрації */}
+        <span className="list-count-badge" aria-live="polite">
+          {isReady && `Знайдено: ${totalCount}`}
+          {isReady && earthquakes.length < totalCount && ` · показано ${earthquakes.length}`}
+        </span>
       </div>
 
       <div className="earthquake-items-container">

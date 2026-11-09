@@ -1,0 +1,28 @@
+.filter-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.btn-reset-filters {
+  width: 100%;
+  background-color: #334155;
+  color: #f8fafc;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-reset-filters:hover:not(:disabled),
+.btn-reset-filters:focus-visible {
+  background-color: #475569;
+}
+
+.btn-reset-filters:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
