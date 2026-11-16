@@ -1,7 +1,16 @@
+import { useSelector } from 'react-redux';
 import { EarthquakeListBody } from './EarthquakeListBody';
+import {
+  selectFeedStatus,
+  selectFilteredCount,
+  selectVisibleCount,
+} from '../../store/selectors/earthquakesSelectors';
 import './EarthquakeList.css';
 
-export function EarthquakeList({ loading, error, onRetry, earthquakes, totalCount }) {
+export function EarthquakeList() {
+  const { loading, error } = useSelector(selectFeedStatus);
+  const totalCount = useSelector(selectFilteredCount);
+  const visibleCount = useSelector(selectVisibleCount);
   const isReady = !loading && !error;
 
   return (
@@ -10,12 +19,12 @@ export function EarthquakeList({ loading, error, onRetry, earthquakes, totalCoun
         <h3 className="widget-title">Останні сейсмічні події</h3>
         <span className="list-count-badge" aria-live="polite">
           {isReady && `Знайдено: ${totalCount}`}
-          {isReady && earthquakes.length < totalCount && ` · показано ${earthquakes.length}`}
+          {isReady && visibleCount < totalCount && ` · показано ${visibleCount}`}
         </span>
       </div>
 
       <div className="earthquake-items-container">
-        <EarthquakeListBody loading={loading} error={error} onRetry={onRetry} earthquakes={earthquakes} />
+        <EarthquakeListBody />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import { useFetch } from './useFetch';
-import { buildEarthquakeDetailsUrl, mapEarthquakeDetails } from '../api/earthquakesApi';
+import { getQueryStatus, useGetEarthquakeDetailsQuery } from '../api/usgsApi';
 
 export function useEarthquakeDetails(id) {
-  return useFetch(buildEarthquakeDetailsUrl(id), mapEarthquakeDetails);
+  const { status, error, currentData, refetch } = useGetEarthquakeDetailsQuery(id);
+  return { data: currentData ?? null, refetch, ...getQueryStatus({ status, error, data: currentData }) };
 }

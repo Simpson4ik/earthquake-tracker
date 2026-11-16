@@ -1,0 +1,10 @@
+.confirm-button {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.confirm-button .btn {
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+}

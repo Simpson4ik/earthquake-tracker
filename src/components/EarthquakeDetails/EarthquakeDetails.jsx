@@ -1,4 +1,5 @@
 import { MagnitudeBadge } from '../MagnitudeBadge/MagnitudeBadge';
+import { FavoriteToggle } from '../FavoriteToggle/FavoriteToggle';
 import { getCategory } from '../../constants/categories';
 import { buildDetailSections } from '../../utils/buildDetailSections';
 import { formatDateTime } from '../../utils/formatTime';
@@ -19,9 +20,12 @@ export function EarthquakeDetails({ earthquake }) {
             {formatDateTime(time)}
           </p>
         </div>
-        <a className="details-source" href={url} target="_blank" rel="noreferrer">
-          Сторінка події на USGS
-        </a>
+        <div className="details-actions">
+          <FavoriteToggle earthquake={earthquake} />
+          <a className="details-source" href={url} target="_blank" rel="noreferrer">
+            Сторінка події на USGS
+          </a>
+        </div>
       </header>
 
       <div className="details-grid">

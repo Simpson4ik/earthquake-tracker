@@ -13,16 +13,5 @@
 }
 
 .btn-retry {
-  background-color: var(--color-control);
-  color: var(--color-text);
-  border: 1px solid var(--color-border-strong);
-  border-radius: 6px;
   padding: 0.5rem 1rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.btn-retry:hover,
-.btn-retry:focus-visible {
-  background-color: var(--color-control-hover);
 }

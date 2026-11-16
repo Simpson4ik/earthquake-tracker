@@ -1,15 +1,13 @@
+import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router/dom';
-import { ThemeProvider } from './context/ThemeProvider';
-import { FiltersProvider } from './context/FiltersProvider';
+import { store } from './store/store';
 import { router } from './router';
 import './App.css';
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <FiltersProvider>
-        <RouterProvider router={router} />
-      </FiltersProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 }

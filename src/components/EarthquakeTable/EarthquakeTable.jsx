@@ -1,6 +1,9 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
 import { MagnitudeBadge } from '../MagnitudeBadge/MagnitudeBadge';
-import { useFilters } from '../../hooks/useFilters';
+import { FavoriteToggle } from '../FavoriteToggle/FavoriteToggle';
+import { selectSort, sortToggled } from '../../store/slices/filtersSlice';
+import { selectVisibleEarthquakes } from '../../store/selectors/earthquakesSelectors';
 import { COLUMNS } from '../../constants/columns';
 import { getCategory } from '../../constants/categories';
 import { getEarthquakePath } from '../../constants/routes';
@@ -10,14 +13,16 @@ import './EarthquakeTable.css';
 const ARIA_SORT = { asc: 'ascending', desc: 'descending' };
 const SORT_ARROW = { asc: ' ▲', desc: ' ▼' };
 
-export function EarthquakeTable({ earthquakes }) {
-  const { sort, toggleSort } = useFilters();
+export function EarthquakeTable() {
+  const earthquakes = useSelector(selectVisibleEarthquakes);
+  const sort = useSelector(selectSort);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleRowClick = (event, id) => {
-    const isLinkClick = event.target.closest('a');
+    const isControlClick = event.target.closest('a, button');
     const isSelectingText = !window.getSelection().isCollapsed;
-    if (!isLinkClick && !isSelectingText) {
+    if (!isControlClick && !isSelectingText) {
       navigate(getEarthquakePath(id));
     }
   };
@@ -37,7 +42,7 @@ export function EarthquakeTable({ earthquakes }) {
             const isActive = key === sort.key;
             return (
               <th key={key} scope="col" aria-sort={isActive ? ARIA_SORT[sort.direction] : 'none'}>
-                <button type="button" className="sort-button" onClick={() => toggleSort(key)}>
+                <button type="button" className="sort-button" onClick={() => dispatch(sortToggled(key))}>
                   {label}
                   <span aria-hidden="true">{isActive ? SORT_ARROW[sort.direction] : ''}</span>
                 </button>
@@ -60,6 +65,9 @@ export function EarthquakeTable({ earthquakes }) {
             <td>{eq.depth.toFixed(1)}</td>
             <td>{formatTime(eq.time)}</td>
             <td>{getCategory(eq.magnitude).label}</td>
+            <td className="td-favorite">
+              <FavoriteToggle earthquake={eq} compact />
+            </td>
           </tr>
         ))}
       </tbody>
