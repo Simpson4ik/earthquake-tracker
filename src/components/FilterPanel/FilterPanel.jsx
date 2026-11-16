@@ -1,6 +1,13 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '../TextField/TextField';
 import { SelectField } from '../SelectField/SelectField';
-import { useFilters } from '../../hooks/useFilters';
+import {
+  filterChanged,
+  filtersReset,
+  selectCanResetFilters,
+  selectFilterValues,
+  selectIsFilterPending,
+} from '../../store/slices/filtersSlice';
 import {
   LIMIT_OPTIONS,
   MAGNITUDE_OPTIONS,
@@ -9,6 +16,7 @@ import {
 } from '../../constants/filters';
 import { ALL_CATEGORIES, CATEGORIES } from '../../constants/categories';
 import { formatRange } from '../../utils/formatMagnitude';
+import '../../styles/button.css';
 import './FilterPanel.css';
 
 const CATEGORY_OPTIONS = [
@@ -27,14 +35,18 @@ const SELECT_FIELDS = [
 ];
 
 export function FilterPanel() {
-  const { values, setField, isPending, canReset, resetFilters } = useFilters();
+  const values = useSelector(selectFilterValues);
+  const isPending = useSelector(selectIsFilterPending);
+  const canReset = useSelector(selectCanResetFilters);
+  const dispatch = useDispatch();
+  const setField = (name, value) => dispatch(filterChanged(name, value));
 
   return (
     <form className="widget-box filter-panel" role="search" onSubmit={(e) => e.preventDefault()}>
       <div className="widget-header">
         <h3 className="widget-title">Фільтри</h3>
         <span className="widget-tag" aria-hidden="true">
-          {isPending ? 'оновлення…' : 'react-hook-form'}
+          {isPending ? 'оновлення…' : 'Redux Toolkit'}
         </span>
       </div>
       <p className="sr-only" aria-live="polite">
@@ -46,7 +58,7 @@ export function FilterPanel() {
           name="search"
           type="search"
           label="Пошук за місцем"
-          placeholder="Напр. Alaska"
+          placeholder="Напр. Alaska…"
           value={values.search}
           onChange={(value) => setField('search', value)}
         />
@@ -72,7 +84,12 @@ export function FilterPanel() {
         ))}
       </div>
 
-      <button type="button" className="btn-reset-filters" onClick={resetFilters} disabled={!canReset}>
+      <button
+        type="button"
+        className="btn btn-block btn-reset-filters"
+        onClick={() => dispatch(filtersReset())}
+        disabled={!canReset}
+      >
         Скинути фільтри
       </button>
     </form>

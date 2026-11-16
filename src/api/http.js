@@ -8,12 +8,16 @@ class HttpError extends Error {
   }
 }
 
+export function isAbortError(error) {
+  return error?.name === 'AbortError';
+}
+
 export async function fetchJson(url, signal) {
   let response;
   try {
     response = await fetch(url, { signal });
   } catch (err) {
-    if (err.name === 'AbortError') throw err;
+    if (isAbortError(err)) throw err;
     throw new Error("Немає з'єднання з сервером. Перевірте інтернет.", { cause: err });
   }
 
@@ -24,7 +28,7 @@ export async function fetchJson(url, signal) {
   try {
     return await response.json();
   } catch (err) {
-    if (err.name === 'AbortError') throw err;
+    if (isAbortError(err)) throw err;
     throw new Error(INVALID_DATA_MESSAGE, { cause: err });
   }
 }

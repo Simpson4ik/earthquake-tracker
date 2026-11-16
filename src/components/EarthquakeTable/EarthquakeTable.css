@@ -2,6 +2,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .earthquake-table th,
@@ -44,6 +45,11 @@
 
 .earthquake-table tbody tr:hover {
   background-color: var(--color-row-hover);
+}
+
+.earthquake-table .td-favorite {
+  padding-block: 0.3rem;
+  text-align: center;
 }
 
 .earthquake-place {

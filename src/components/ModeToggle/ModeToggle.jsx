@@ -1,10 +1,13 @@
-import { useFilters } from '../../hooks/useFilters';
+import { useDispatch, useSelector } from 'react-redux';
+import { alertModeToggled, selectIsAlertMode } from '../../store/slices/filtersSlice';
 import { ALERT_MAGNITUDE } from '../../constants/categories';
 import { formatMinMagnitude } from '../../utils/formatMagnitude';
+import '../../styles/button.css';
 import './ModeToggle.css';
 
 export function ModeToggle() {
-  const { isAlertMode, toggleAlertMode } = useFilters();
+  const isAlertMode = useSelector(selectIsAlertMode);
+  const dispatch = useDispatch();
 
   return (
     <div className={`widget-box mode-toggle-widget ${isAlertMode ? 'alert-active' : ''}`}>
@@ -29,8 +32,8 @@ export function ModeToggle() {
 
       <button
         type="button"
-        className={`btn-toggle ${isAlertMode ? 'btn-toggle-on' : ''}`}
-        onClick={toggleAlertMode}
+        className={`btn btn-block btn-toggle ${isAlertMode ? 'btn-toggle-on' : ''}`}
+        onClick={() => dispatch(alertModeToggled())}
       >
         {isAlertMode ? 'Вимкнути режим тривоги' : 'Увімкнути режим тривоги'}
       </button>

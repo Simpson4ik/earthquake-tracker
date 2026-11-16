@@ -11,6 +11,7 @@ export const COLUMNS = [
   { key: 'depth', label: 'Глибина, км', defaultDirection: 'desc', compare: (a, b) => a.depth - b.depth },
   { key: 'time', label: 'Час', defaultDirection: 'desc', compare: (a, b) => a.time - b.time },
   { key: 'category', label: 'Категорія' },
+  { key: 'favorite', label: 'Обране' },
 ];
 
 export const DEFAULT_SORT = { key: 'time', direction: 'desc' };

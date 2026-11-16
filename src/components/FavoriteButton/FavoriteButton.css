@@ -1,0 +1,36 @@
+.favorite-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.favorite-button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.favorite-button.is-active .favorite-icon {
+  color: var(--color-warning);
+}
+
+.favorite-icon {
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.favorite-button-compact {
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0.25rem;
+  background: none;
+  border-color: transparent;
+  color: var(--color-text-muted);
+}
+
+.favorite-button-compact .favorite-icon {
+  font-size: 1.25rem;
+}
