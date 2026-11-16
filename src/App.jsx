@@ -1,13 +1,15 @@
-import { Header } from './components/Header/Header';
-import { EarthquakeDashboard } from './components/EarthquakeDashboard/EarthquakeDashboard';
-import { APP_NAME, APP_SUBTITLE } from './constants/app';
+import { RouterProvider } from 'react-router/dom';
+import { ThemeProvider } from './context/ThemeProvider';
+import { FiltersProvider } from './context/FiltersProvider';
+import { router } from './router';
 import './App.css';
 
 export default function App() {
   return (
-    <div className="app-container">
-      <Header appName={APP_NAME} subtitle={APP_SUBTITLE} />
-      <EarthquakeDashboard />
-    </div>
+    <ThemeProvider>
+      <FiltersProvider>
+        <RouterProvider router={router} />
+      </FiltersProvider>
+    </ThemeProvider>
   );
 }

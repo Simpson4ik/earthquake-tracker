@@ -4,18 +4,18 @@
 
 .mode-toggle-widget.alert-active {
   border-color: rgba(239, 68, 68, 0.4);
-  background-color: #261b23;
+  background-color: var(--color-alert-surface);
 }
 
 .toggle-status-box {
-  background-color: #0f172a;
+  background-color: var(--color-surface-sunken);
   border-radius: 6px;
   padding: 1rem;
   margin-bottom: 1.25rem;
 }
 
 .alert-active .toggle-status-box {
-  background-color: rgba(15, 23, 42, 0.7);
+  background-color: var(--color-alert-inset);
 }
 
 .status-indicator {
@@ -40,21 +40,21 @@
 .status-label {
   font-weight: 600;
   font-size: 0.95rem;
-  color: #f1f5f9;
+  color: var(--color-text);
 }
 
 .status-description {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
   margin: 0;
   line-height: 1.4;
 }
 
 .btn-toggle {
   width: 100%;
-  background-color: #334155;
-  color: #f8fafc;
-  border: 1px solid #475569;
+  background-color: var(--color-control);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
   border-radius: 6px;
   padding: 0.75rem 1rem;
   font-size: 0.9rem;
@@ -64,15 +64,15 @@
 }
 
 .btn-toggle:hover {
-  background-color: #475569;
+  background-color: var(--color-control-hover);
 }
 
 .btn-toggle.btn-toggle-on {
-  background-color: #ef4444;
-  border-color: #dc2626;
+  background-color: #dc2626;
+  border-color: #b91c1c;
   color: #ffffff;
 }
 
 .btn-toggle.btn-toggle-on:hover {
-  background-color: #dc2626;
+  background-color: #b91c1c;
 }

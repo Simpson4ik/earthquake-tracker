@@ -1,8 +1,11 @@
+import { useFilters } from '../../hooks/useFilters';
 import { ALERT_MAGNITUDE } from '../../constants/categories';
 import { formatMinMagnitude } from '../../utils/formatMagnitude';
 import './ModeToggle.css';
 
-export function ModeToggle({ isAlertMode, onToggle }) {
+export function ModeToggle() {
+  const { isAlertMode, toggleAlertMode } = useFilters();
+
   return (
     <div className={`widget-box mode-toggle-widget ${isAlertMode ? 'alert-active' : ''}`}>
       <div className="widget-header">
@@ -27,7 +30,7 @@ export function ModeToggle({ isAlertMode, onToggle }) {
       <button
         type="button"
         className={`btn-toggle ${isAlertMode ? 'btn-toggle-on' : ''}`}
-        onClick={onToggle}
+        onClick={toggleAlertMode}
       >
         {isAlertMode ? 'Вимкнути режим тривоги' : 'Увімкнути режим тривоги'}
       </button>

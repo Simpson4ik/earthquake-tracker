@@ -6,7 +6,6 @@ export const CATEGORIES = [
 
 export const ALL_CATEGORIES = 'all';
 
-// Режим тривоги і KPI «Сильні події» спираються на нижню межу категорії «Сильні»
 export const ALERT_MAGNITUDE = CATEGORIES.find(({ id }) => id === 'strong').min;
 
 export function getCategory(magnitude) {
